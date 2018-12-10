@@ -145,21 +145,20 @@ class TotalCommander(QMainWindow):
 
       if dlg.exec_():
         filename = dlg.selectedFiles()
-        print(filename)
-        #nazwa pliku powinna być przekazywana -> data = open(filename, 'rt').read()
-        data = open("plik.txt", 'rt').read()
+        data = open(filename[0], 'rt').read()
         self.text.setText(data)
         self.statusbar.showMessage('Otworzono plik')
 
     def savefile(self):
-      name = QFileDialog.getSaveFileName(self, 'Save File', 'c:\\',"Text files (*.txt)")
-      print(name)
-      #nazwa pliku powinna być przekazywana -> file = open(name,'w')
-      file = open("zapis.txt",'w')
-      text = self.text.toPlainText()
-      file.write(text)
-      file.close()
-      self.statusbar.showMessage('Zapisano')
+      name = QFileDialog.getSaveFileName(self, 'Save File', "Text files (*.txt)")
+      if name[0] != '':
+        file = open(name[0],'w')
+        text = self.text.toPlainText()
+        file.write(text)
+        file.close()
+        self.statusbar.showMessage('Zapisano')
+      else:
+        self.statusbar.showMessage('Anulowano zapis do pliku')
 
     def setupMenus(self):
 
